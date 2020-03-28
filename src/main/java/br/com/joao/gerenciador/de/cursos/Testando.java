@@ -46,9 +46,6 @@ public class Testando {
         
         System.out.println("Ordenando por tempo de aula com java 8: " + aulas);
         
-        
-        
-        
     }
     
 }

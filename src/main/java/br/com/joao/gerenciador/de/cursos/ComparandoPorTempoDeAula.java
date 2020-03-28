@@ -26,6 +26,4 @@ public class ComparandoPorTempoDeAula implements Comparator<Aula>{
         }        
         
     }
-
-    
 }
