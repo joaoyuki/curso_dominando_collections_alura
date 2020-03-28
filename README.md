@@ -121,3 +121,89 @@ public class Testando {
 }
 
 ```
+
+## Aula 03 - Relacionamentos com coleções
+
+- ArrayList e LinkedList
+- - São filhas de List
+- - Mantem a ordem dos elementos que foram adicionados
+- - Pode adicionar elementos repetidos
+
+- ArrayList
+- - Vantagem
+- - - Possui o acesso mais rápido **(Random Access Memory)**
+- - Desvantagem
+- - - Caso eu queira adicionar um elemento no começo da lista o java vai precisar mudar todos os elementos do posição e isso vai gerar muito processamento a toa
+
+- LinkedList
+- - Vantagem
+- - - É mais rapída para adicionar ou remover elementos no começo da lista
+- - Desvantagem
+- - - É mais lenta para pegar um elemento em uma posição específica, pois a LinkedList passa elemento por elemento até chegar na posição desejada. Caso tenha 1000 elementos e pedirmos para pegar o elemento 999, o java vai andar pelas 999 posições
+
+- Comparando as duas listas
+
+```java
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package br.com.joao.gerenciador.de.cursos;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+
+/**
+ *
+ * @author João
+ */
+public class TesteListas {
+
+ public static void main(String[] args) {
+
+        System.out.println("**** ArrayList vs LinkedList ***");
+
+        List<Integer> numerosArrayList = new ArrayList<>();
+        List<Integer> numerosLinkedList = new LinkedList<>();
+        int quantidadeElementos = 1000000;
+
+        long tempoArrayList  = insereElementosNo(numerosArrayList, quantidadeElementos);
+        long tempoLinkedList = insereElementosNo(numerosLinkedList, quantidadeElementos);
+
+        System.out.println("Inserção na ArrayList demorou  " + tempoArrayList);
+        System.out.println("Inserção na LinkedList demorou " + tempoLinkedList);
+
+        tempoArrayList = removePrimeirosElementos(numerosArrayList);
+        tempoLinkedList = removePrimeirosElementos(numerosLinkedList);
+
+        System.out.println("Remoção da ArrayList demorou  " + tempoArrayList);
+        System.out.println("Remoção da LinkedList demorou " + tempoLinkedList);
+    }
+
+    /*
+     * removendo 100 elementos sempre na primeira posição
+     */
+    private static long removePrimeirosElementos(List<Integer> numeros) {
+        long ini = System.currentTimeMillis();
+
+        for (int i = 0; i < 100; i++) {
+            numeros.remove(0); //removendo sempre o primeiro elemento
+        }
+        long fim = System.currentTimeMillis();
+        return fim-ini;
+    }
+
+    private static long insereElementosNo(List<Integer> numeros, int quantidade) {
+        long ini = System.currentTimeMillis();
+        for (int i = 0; i < quantidade; i++) {
+            numeros.add(i);
+        }
+        long fim = System.currentTimeMillis();
+        return fim-ini;
+    }
+    
+}
+
+```
