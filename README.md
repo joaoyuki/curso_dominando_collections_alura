@@ -207,3 +207,94 @@ public class TesteListas {
 }
 
 ```
+
+## Aula 05 - O poder dos Set's
+
+- Set é parecido com conjuntos matemáticos
+- Quando acionamos registros em um set, não temos a garantia que a ordem de adição dos objetos será mantida
+- - Uma lista seria um sequencia de objetos e um set seria  um conjunto de objetos
+- Não conseguimos pegar um registro de um set, não exite o comando **.get(index)**
+- Todos os conjuntos (set) do Java, não aceitam elementos repetidos
+- Buscar elementos em conjuntos (set) é muito mais rapido do que em List porque eles trabalham com **tabelas de espelhamento** e não comparam elemento por elemento
+
+- Exemplo comparando inserção e pesquisa em ArrayList e HashSet.
+- - Inserção é mais rápida em ArrayList mas a busca é mais demorada
+- - Pesquisa é mais rápida em HashSet mas a inserção é mais lenta
+```java
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package br.com.joao.gerenciador.de.cursos;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
+
+/**
+ *
+ * @author João
+ */
+public class TestePerformance {
+    
+ public static void main(String[] args) {
+
+        Collection<Integer> numeros = new ArrayList<Integer>();
+
+        long inicioInserindo = System.currentTimeMillis();
+
+        for (int i = 1; i <= 50000; i++) {
+            numeros.add(i);
+        }
+        
+        long finalInserindo = System.currentTimeMillis();
+
+        
+        long inicioPesquisando = System.currentTimeMillis();
+        for (Integer numero : numeros) {
+            numeros.contains(numero);
+        }
+        long finalPesquisando = System.currentTimeMillis();
+        
+
+        long tempoDeExecucao = finalInserindo - inicioInserindo;
+
+        System.out.println("Tempo gasto para inserir em ArrayList: " + tempoDeExecucao);
+        
+        
+        long tempoDePesquisando = finalPesquisando - inicioPesquisando;
+        System.out.println("Tempo gasto para pesquisar em ArrayList: " + tempoDePesquisando);
+        
+        
+        Collection<Integer> numerosSet = new HashSet<Integer>();
+
+        long inicioInserindoSet = System.currentTimeMillis();
+
+        for (int i = 1; i <= 50000; i++) {
+            numerosSet.add(i);
+        }
+        
+        long finalInserindoSet = System.currentTimeMillis();
+
+        
+        long inicioPesquisandoSet = System.currentTimeMillis();
+        for (Integer numero : numerosSet) {
+            numerosSet.contains(numero);
+        }
+        long finalPesquisandoSet = System.currentTimeMillis();
+        
+
+        long tempoDeExecucaoSet = finalInserindoSet - inicioInserindoSet;
+
+        System.out.println("Tempo gasto para inserir em HashSet: " + tempoDeExecucaoSet);
+        
+        
+        long tempoDePesquisandoSet = finalPesquisandoSet - inicioPesquisandoSet;
+        System.out.println("Tempo gasto para pesquisar em HashSet: " + tempoDePesquisandoSet);        
+        
+    }    
+    
+}
+
+```

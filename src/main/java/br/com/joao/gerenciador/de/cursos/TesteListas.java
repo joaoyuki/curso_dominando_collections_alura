@@ -8,6 +8,7 @@ package br.com.joao.gerenciador.de.cursos;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Scanner;
 
 /**
  *
@@ -16,6 +17,18 @@ import java.util.List;
 public class TesteListas {
 
  public static void main(String[] args) {
+     
+     
+                Scanner scan = new Scanner(System.in);
+        int i = scan.nextInt();
+        String s = scan.next();
+        float nextFloat = scan.nextFloat();
+
+        // Write your code here.
+
+        System.out.println("String: " + s);
+        //System.out.println("Double: " + d);
+        System.out.println("Int: " + i);
 
         System.out.println("**** ArrayList vs LinkedList ***");
 
