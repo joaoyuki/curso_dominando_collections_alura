@@ -298,3 +298,125 @@ public class TestePerformance {
 }
 
 ```
+
+## Aula 07 - Equals e hashcode
+
+- O método **equals** diz como uma classe pode ser comparada. Esse método existe na classe **object** e sempre que precisamos comparar objetos, precisamos escrever esse método e ensinar para o java como ele pode comparar dois objetos.
+
+- Exemplo: 
+```java
+@Override
+public boolean equals(Object obj) {
+    Aluno outroAluno = (Aluno) obj;
+    return this.nome.equals(outroAluno.nome);
+}
+```
+
+- O método **hashCode()** devolve um número **mágico** para um objeto. Esse numero mágico é utilizado para separar os objetos em coleções menores, tornando mais fácil e rápido de encontrar. Podemos utilizar várias regras para gerar esse número, mas quando mais seprar os ojetos, melhor. Um dica interessante, caso queiramos separar objetos através de string, podemos gerar o hashCode da string com o método **hasCode()** e devolver esse número no méoto **hashCode()**.
+- É assim que a **tabela de espelhamento** funciona, através do número de hashCode de cada objeto para saber procurar objetos.
+- Exemplo de um método hashCode gerando um hash através de uma string
+```java
+@Override
+public int hashCode(){
+    return this.nome.hashCode();
+}
+```
+
+## Aula 08 - Outros sets e interators
+
+- O **Treeset**  ordena os elementos baseados no comparable da classe, ou seja, para termina um set de treeset de uma classe, essa classe precisa implementar o comparable
+- A classe **Vector** é uma forma antiga de trabalhar com arrays e não é mais utilizada. Era utilziada por ser **thread-safe** mas temos recursos melhores atualmente.
+- O **LinkedHasSet** é um tipo de set que guarda os elementos na ordem em que foram inseridos
+
+- Exemplo de **Treeset**. Como a classe funcionário não implemente Comparable, ao adicionar na lista, temos um erro:
+- > Exception in thread "main" java.lang.ClassCastException: br.com.joao.gerenciador.de.cursos.Funcionario cannot be cast to java.lang.Comparable
+	at java.util.TreeMap.compare(TreeMap.java:1294)
+	at java.util.TreeMap.put(TreeMap.java:538)
+	at java.util.TreeSet.add(TreeSet.java:255)
+	at br.com.joao.gerenciador.de.cursos.TestandoTreeSet.main(TestandoTreeSet.java:24)
+```java
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package br.com.joao.gerenciador.de.cursos;
+
+/**
+ *
+ * @author João
+ */
+public class Funcionario {
+
+    private String nome;
+    private int idade;
+
+    public Funcionario(String nome, int idade) {
+        this.nome = nome;
+        this.idade = idade;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public int getIdade() {
+        return idade;
+    }
+
+    public void setIdade(int idade) {
+        this.idade = idade;
+    }
+    
+    
+    
+}
+
+
+public class TestandoTreeSet {
+
+    public static void main(String[] args) {
+        
+        Funcionario f1 = new Funcionario("João", 32);
+        Funcionario f2 = new Funcionario("Felipe", 31);
+        Funcionario f3 = new Funcionario("Rodrigues", 40);
+        
+        Set<Funcionario> funcionarios = new TreeSet<Funcionario>();
+        funcionarios.add(f1);
+        funcionarios.add(f2);
+        funcionarios.add(f3);
+        
+        funcionarios.forEach(a -> System.out.println(a.getNome()));
+        
+    }
+    
+}
+
+```
+- Para resolvermos o erro acima, podemos fazer duas coisas:
+- - A classe funcionário implementar Comparable
+- - Criar um comparator externo
+```java
+package br.com.joao.gerenciador.de.cursos;
+
+import java.util.Comparator;
+
+/**
+ *
+ * @author João
+ */
+public class FuncionarioComparatorPorIdade implements Comparator<Funcionario>{
+
+    @Override
+    public int compare(Funcionario o1, Funcionario o2) {
+        return o1.getIdade() - o2.getIdade();
+    }
+    
+}
+
+Set<Funcionario> funcionarios = new TreeSet<Funcionario>(new FuncionarioComparatorPorIdade());
+```
